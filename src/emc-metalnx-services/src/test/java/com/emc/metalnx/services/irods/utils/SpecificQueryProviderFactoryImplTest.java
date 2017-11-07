@@ -17,4 +17,13 @@ public class SpecificQueryProviderFactoryImplTest {
 		Assert.assertNotNull("null provider", actual);
 	}
 
+	@Test
+	public void testMysql() throws Exception {
+		ClientHints clientHints = Mockito.mock(ClientHints.class);
+		Mockito.when(clientHints.whatTypeOfIcatIsIt()).thenReturn(IcatTypeEnum.MYSQL);
+		SpecificQueryProviderFactory specificQueryProviderFactory = new SpecificQueryProviderFactoryImpl();
+		SpecificQueryProvider actual = specificQueryProviderFactory.instance(clientHints);
+		Assert.assertNotNull("null provider", actual);
+	}
+
 }
