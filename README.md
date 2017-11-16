@@ -1,7 +1,7 @@
 ![Metalnx Logo](docs/IMAGES/mlx_logo_blue.png)
 
 ## Version: 4.2.1.0-SNAPSHOT
-## Git Tag: niehs/issue2
+## Git Tag: origin/issue25
 ## Date: Oct 27, 2017
 
 
@@ -85,4 +85,8 @@ The current Selenium tests have been refactored to start with basic health check
 
 #### Fix 500 errors clicking on zone or home when no permissions
 
-issue2 branch WIP
+Fix behavior browsing collections above where the user has access, such as the zone and zone/home directory. Previously this was causing a generic error page, now the interface will simply display a banner and return to the user home directory.
+
+#### Support deep linking esp. for collection URLs, improve behavior of back button #25
+ 
+Allow deep linking and back button support, especially for the collection and data object views
