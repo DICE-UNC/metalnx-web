@@ -181,6 +181,9 @@ public class CollectionController {
 	public String index(final Model model, final HttpServletRequest request,
 			@RequestParam(value = "uploadNewTab", required = false) final boolean uploadNewTab)
 			throws DataGridConnectionRefusedException {
+
+		logger.info("index()");
+
 		try {
 			sourcePaths.clear();
 
@@ -272,6 +275,8 @@ public class CollectionController {
 	public String getAvailableRescForPath(final Model model, @RequestParam("isUpload") final boolean isUpload)
 			throws DataGridConnectionRefusedException {
 
+		logger.info("getAvailableRescForPath()");
+
 		Map<DataGridCollectionAndDataObject, DataGridResource> replicasMap = null;
 		List<DataGridResource> resources = resourceService.findFirstLevelResources();
 
@@ -327,6 +332,9 @@ public class CollectionController {
 	@RequestMapping(value = "/getSubDirectories/", method = RequestMethod.POST)
 	public String getSubDirectories(final Model model, @RequestParam("path") String path) throws DataGridException {
 
+		logger.info("getSubDirectories()");
+		logger.info("path:{}", path);
+
 		// removes all ocurrences of "/" at the end of the path string
 		while (path.endsWith("/") && !"/".equals(path)) {
 			path = path.substring(0, path.lastIndexOf("/"));
@@ -351,6 +359,7 @@ public class CollectionController {
 	@RequestMapping(value = "/goBackHistory/", method = RequestMethod.POST)
 	public String goBackHistory(final Model model, @RequestParam("steps") final int steps)
 			throws DataGridException, JargonException {
+		logger.info("goBackHistory()");
 		if (collectionHistoryBack.size() < steps || steps < 1) {
 			model.addAttribute("invalidStepsBackwards", steps);
 			logger.info("It is not possible to go back {} steps, current stack size is {}", steps,
@@ -388,6 +397,8 @@ public class CollectionController {
 	@RequestMapping(value = "/goForwardHistory/", method = RequestMethod.POST)
 	public String goForwardHistory(final Model model, @RequestParam("steps") final int steps)
 			throws DataGridException, JargonException {
+
+		logger.info("goForwardHistory()");
 		if (collectionHistoryForward.size() < steps || steps < 1) {
 			model.addAttribute("invalidStepsForward", steps);
 			return getCollBrowserView(model, currentPath);
@@ -453,6 +464,9 @@ public class CollectionController {
 	public String getFileInfo(final Model model, @RequestParam("path") final String path)
 			throws DataGridConnectionRefusedException {
 
+		logger.info("info()");
+		logger.info("path:{}", path);
+
 		DataGridCollectionAndDataObject dataGridObj = null;
 		Map<DataGridCollectionAndDataObject, DataGridResource> replicasMap = null;
 
@@ -501,9 +515,13 @@ public class CollectionController {
 			@RequestParam("groupName") final String groupName,
 			@RequestParam("retrievePermissions") final boolean retrievePermissions)
 			throws DataGridConnectionRefusedException, FileNotFoundException, JargonException {
+
 		if (path == null || path == "") {
 			path = "/";
 		}
+
+		logger.info("getDirectoriesAndFilesForGroupForm()");
+		logger.info("path:{}", path);
 
 		List<DataGridCollectionAndDataObject> list = null;
 		list = cs.getSubCollectionsAndDataObjectsUnderPath(path);
@@ -562,6 +580,10 @@ public class CollectionController {
 			@RequestParam("username") final String username,
 			@RequestParam("retrievePermissions") final boolean retrievePermissions)
 			throws DataGridConnectionRefusedException, FileNotFoundException, JargonException {
+
+		logger.info("getDirectoriesAndFilesForUser()");
+		logger.info("path:{}", path);
+
 		List<DataGridCollectionAndDataObject> list = new ArrayList<DataGridCollectionAndDataObject>();
 		Set<String> readPermissions = new HashSet<String>();
 		Set<String> writePermissions = new HashSet<String>();
@@ -620,7 +642,8 @@ public class CollectionController {
 	@RequestMapping(value = "/find/{name}")
 	public String listCollectionsAndDataObjects(final Model model, @PathVariable final String name)
 			throws DataGridConnectionRefusedException {
-		logger.info("Finding collections or data objects that match " + name);
+
+		logger.info("Finding collections or data objects that match:{} ", name);
 
 		// Find collections and data objects
 		List<DataGridCollectionAndDataObject> dataGridCollectionAndDataObjects = cs
@@ -642,6 +665,9 @@ public class CollectionController {
 	@RequestMapping(value = "add/action/", method = RequestMethod.POST)
 	public String addCollection(final Model model, @ModelAttribute final CollectionOrDataObjectForm collection,
 			final RedirectAttributes redirectAttributes) throws DataGridConnectionRefusedException {
+
+		logger.info("addCollection()");
+		logger.info("collection:{}", collection);
 		DataGridCollectionAndDataObject newCollection = new DataGridCollectionAndDataObject(
 				currentPath + '/' + collection.getCollectionName(), collection.getCollectionName(), currentPath, true);
 
@@ -675,6 +701,10 @@ public class CollectionController {
 	@RequestMapping(value = "modify/action", method = RequestMethod.POST)
 	public String modifyAction(@ModelAttribute final CollectionOrDataObjectForm collForm,
 			final RedirectAttributes redirectAttributes) throws DataGridException {
+
+		logger.info("modifyAction()");
+		logger.info("collForm:{}", collForm);
+
 		String previousPath = collForm.getPath();
 		String parentPath = previousPath.substring(0, previousPath.lastIndexOf("/"));
 		String newPath = String.format("%s/%s", parentPath, collForm.getCollectionName());
@@ -705,6 +735,10 @@ public class CollectionController {
 
 	private boolean applyTemplatesToPath(final MetadataTemplateForm template)
 			throws DataGridConnectionRefusedException {
+
+		logger.info("applyTemplatesToPath()");
+		logger.info("template:{}", template);
+
 		boolean allMetadataAdded = true;
 		List<String> attributes = template.getAvuAttributes();
 		List<String> values = template.getAvuValues();
@@ -744,6 +778,7 @@ public class CollectionController {
 	 */
 	@RequestMapping(value = "/home/")
 	public String homeCollection(final Model model) throws DataGridException {
+		logger.info("home()");
 		// cleaning session variables
 		sourcePaths.clear();
 		currentPath = cs.getHomeDirectyForCurrentUser();
@@ -759,6 +794,7 @@ public class CollectionController {
 	 */
 	@RequestMapping(value = "/public/")
 	public String publicCollection(final Model model) throws DataGridException {
+		logger.info("public()");
 		// cleaning session variables
 		sourcePaths.clear();
 
@@ -783,6 +819,7 @@ public class CollectionController {
 	 */
 	@RequestMapping(value = "/trash/")
 	public String trashCollection(final Model model) throws DataGridException {
+		logger.info("trash()");
 		// cleaning session variables
 		sourcePaths.clear();
 
@@ -805,6 +842,9 @@ public class CollectionController {
 	@RequestMapping(value = "/getBreadCrumbForObject/")
 	public String getBreadCrumbForObject(final Model model, @RequestParam("path") String path)
 			throws DataGridConnectionRefusedException {
+		logger.info("getBreadCrumbForObject()");
+		logger.info("path:{}", path);
+
 		if (path.isEmpty()) {
 			path = currentPath;
 		} else {
@@ -844,6 +884,9 @@ public class CollectionController {
 	@RequestMapping(value = "isValidCollectionName/{newObjectName}/", method = RequestMethod.GET, produces = {
 			"text/plain" })
 	public String isValidCollectionName(@PathVariable final String newObjectName) throws DataGridException {
+
+		logger.info("isValidCollectionName()");
+
 		String rc = "true";
 		String newPath = String.format("%s/%s", currentPath, newObjectName);
 
@@ -874,6 +917,9 @@ public class CollectionController {
 	@RequestMapping(value = "getPaginatedJSONObjs/")
 	@ResponseBody
 	public String getPaginatedJSONObjs(final HttpServletRequest request) throws DataGridConnectionRefusedException {
+		logger.info("getPaginatedJSONObjs()");
+		logger.info("request:{}", request);
+
 		List<DataGridCollectionAndDataObject> dataGridCollectionAndDataObjects;
 
 		int draw = Integer.parseInt(request.getParameter("draw"));
