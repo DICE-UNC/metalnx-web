@@ -133,6 +133,10 @@ function unstarPath(path){
 	console.log("UnstarPath() ends");
 }
 
+function positionBrowserToPath(path) {
+	window.location.href = '/emc-metalnx-web/collections' + path; //relative to domain
+}
+
 /*
 
 function ChangeUrl(title, urlVal) {

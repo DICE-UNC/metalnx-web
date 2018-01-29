@@ -65,7 +65,7 @@ public class CollectionInfoController {
 	private static final Logger logger = LoggerFactory.getLogger(CollectionInfoController.class);
 
 	@RequestMapping(value = "/**", method = RequestMethod.GET)
-	public String getTestCollectionInfo(final Model model, HttpServletRequest request)
+	public String getCollectionSummary(final Model model, HttpServletRequest request)
 			throws DataGridException, DataGridConnectionRefusedException, JargonException {
 
 		logger.info("CollectionInfoController getTestCollectionInfo() starts !!");
@@ -86,9 +86,9 @@ public class CollectionInfoController {
 		model.addAttribute("iconToDisplay", iconToDisplay);
 		model.addAttribute("dataProfile", dataProfile);
 		model.addAttribute("breadcrumb", new DataGridBreadcrumb(dataProfile.getAbsolutePath()));
-		DataGridBreadcrumb bc = new DataGridBreadcrumb(dataProfile.getAbsolutePath());
+		model.addAttribute("homeCollectionName", irodsServices.getCurrentUser());
 		
-		System.out.println("Absolute Path :: " +dataProfile.getAbsolutePath());
+		System.out.println("Absolute Path for breadcrum :: " +dataProfile.getAbsolutePath());
 		String template = "";
 
 		if (!dataProfile.isFile())
@@ -117,7 +117,7 @@ public class CollectionInfoController {
 		try {
 			@SuppressWarnings("rawtypes")
 			DataProfile dataProfile = dataProfilerService.retrieveDataProfile(path);
-			logger.info("------CollectionInfoController getTestCollectionInfo() ends !!");
+			logger.info("------CollectionInfoController getCollectionInfo() ends !!");
 			logger.info("data profile retrieved:{}", dataProfile);
 
 			/*

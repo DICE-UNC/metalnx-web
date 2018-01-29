@@ -31,26 +31,26 @@
 		</div>
 
 		<div class="col-md-9 col-sm-9 col-xs-12 pull-left">
-			<a href="#"><i class="fa fa-home"></i></a>
-
-
-			<th:block th:each="pathItem, iterStat: ${dataProfile.pathComponents}">
-				<th:block
-					th:if="${iterStat.index lt (dataProfile.pathComponents.size()-1)}">
-					<a href="#" th:text="${ pathItem }" th:title="${ pathItem }"
-						th:onclick="'javascript:getSubDirectories(/zone1/home);'"><i
-						class="color-blue"></i> </a>
-					<span class="fa fa-angle-double-right "></span>
+			<a th:href="@{${urlMap.URL_HOME_COLLECTION_USER}}"><i class="fa fa-home"></i></a>
+			
+			 <th:block th:each="breadcrumbItem, iterStat: ${breadcrumb.items}">
+			 
+				 <th:block th:if="${iterStat.index lt (breadcrumb.items.size()-1)}">
+					<a  href="#" aria-label="'path breadcrumb for:' + ${ breadcrumbItem.path }"
+                                th:text="${breadcrumbItem.name}"
+                                th:title="${breadcrumbItem.path}"
+                                th:onclick="'javascript:positionBrowserToPath(\'' + ${ breadcrumbItem.path } + '\');'"
+                            ></a>
+                            <span class="fa fa-angle-double-right "></span>
 				</th:block>
-
+				
 				<th:block
 					th:if="${iterStat.index eq (dataProfile.pathComponents.size()-1)}">
 					<span th:text="${ pathItem }" th:title="${ pathItem }"> </span>
 
 				</th:block>
-
-			</th:block>
-
+				
+			 </th:block>
 		</div>
 
 

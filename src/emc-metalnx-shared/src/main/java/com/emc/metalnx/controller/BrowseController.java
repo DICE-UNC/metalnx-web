@@ -687,6 +687,7 @@ public class BrowseController {
 		logger.info("homeCollection()");
 		sourcePaths.clear();
 		currentPath = cs.getHomeDirectyForCurrentUser();
+		logger.info("homeCollection() :: " +currentPath);
 		parentPath = currentPath;
 		return "redirect:/collections" + currentPath;
 	}
@@ -965,6 +966,7 @@ public class BrowseController {
 		model.addAttribute("collectionForwardHistoryEmpty", collectionHistoryForward.isEmpty());
 		model.addAttribute("collectionForwardHistory", collectionHistoryForward);
 		model.addAttribute("collectionAndDataObject", obj);
+		System.out.println("PATH for bread crum :: " +obj.getPath());
 		model.addAttribute("breadcrumb", new DataGridBreadcrumb(obj.getPath()));
 		model.addAttribute("homeCollectionName", irodsServices.getCurrentUser());
 	}
