@@ -1,4 +1,25 @@
-![Metalnx Logo](docs/IMAGES/mlx_logo_blue.png)
+
+
+#*****************************************
+# Project deprecated 
+
+refer to https://github.com/irods-contrib/metalnx-web
+
+This project has been transferred over into the iRODS Consortium where active development will continue, consider this repo to 
+be an 'archived' status, and later we'll flip the GitHub bits to make it read only.
+
+We're busy over there in the other location, and all code has been moved over, currently in master, and is being actively developed in the context of the iRODS Consortium and MetaLnx working group
+
+#*****************************************
+
+
+
+
+
+
+
+
+
 
 ## Version: 2.0.0-SNAPSHOT
 ## Git Tag:
